@@ -1,0 +1,9 @@
+--database=postgresql
+--skip-bundle
+--skip-action-cable
+--skip-spring
+--skip-coffee
+--skip-turbolinkgs
+--skip-test-unit
+--skip-test
+--skip-system-test

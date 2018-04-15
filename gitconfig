@@ -1,0 +1,25 @@
+[user]
+  name = Stephen Meriwether
+  email = stephen@meriwether.io 
+
+[core]
+  excludesfile = ~/.gitignore
+
+[alias]
+  b = branch
+  st = status
+  di = diff
+  co = checkout
+  ci = commit
+  pom = pull origin master
+  aa = add --all
+  dc = diff --cached
+  amend = commit --amend
+  undo = reset --soft HEAD^
+  delete = branch -D
+
+[color]
+  ui = auto
+  
+[diff "sopsdiffer"]
+  textconv = sops -d
