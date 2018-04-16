@@ -21,6 +21,7 @@ alias work='cd $WORKSPACE'
 alias down='cd $HOME/Downloads'
 alias rmigrate='bundle exec rails db:migrate RAILS_ENV=development && bundle exzec rails db:migrate RAILS_ENV=test'
 alias devg='cd $GOPATH/src/github.com'
+alias dpsql='docker exec -ti postgres psql'
 
 
 # Path
@@ -30,8 +31,6 @@ export PATH="$HOME/bin:/usr/local/bin:$PATH"
 # Exports
 export WORKSPACE=$HOME/workspace
 export GOPATH=$WORKSPACE/golang
-
-## Other
 export GIT_EDITOR=vim
 
 ## Golang
