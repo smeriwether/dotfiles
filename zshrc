@@ -32,10 +32,7 @@ export PATH="$HOME/bin:/usr/local/bin:$PATH"
 export WORKSPACE=$HOME/workspace
 export GOPATH=$WORKSPACE/golang
 export GIT_EDITOR=vim
-
-## Golang
 export PATH="$GOPATH/bin:$PATH"
-
 
 
 # Software Tools
