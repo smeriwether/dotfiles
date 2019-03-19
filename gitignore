@@ -9,6 +9,4 @@
 **/chromedriver.out
 **/node_modules/**
 connection_uri.txt
-.env.development
 .env.local
-

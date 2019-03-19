@@ -21,6 +21,8 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'tpope/vim-rails'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'posva/vim-vue'
+Plugin 'leafgarland/typescript-vim'
 call vundle#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -122,11 +124,6 @@ augroup vimrcEx
   " Clear all autocmds in the group
   autocmd!
   autocmd FileType text setlocal textwidth=78
-  " Jump to last cursor position unless it's invalid or in an event handler
-  autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\"" |
-    \ endif
 
   "for ruby, autoindent with two spaces, always expand tabs
   autocmd FileType ruby,haml,yaml,html,sass,cucumber set ai sw=2 sts=2 et
@@ -136,9 +133,6 @@ augroup vimrcEx
 
   autocmd BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:&gt;
   autocmd BufRead *.markdown  set ai formatoptions=tcroqn2 comments=n:&gt;
-
-  " Indent p tags
-  " autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
 
   " Don't syntax highlight markdown because it's often wrong
   autocmd! FileType mkd setlocal syn=off
@@ -150,9 +144,6 @@ augroup vimrcEx
 
   " *.md is markdown
   autocmd! BufNewFile,BufRead *.md setlocal ft=
-
-  " indent slim two spaces, not four
-  autocmd! FileType slim set sw=2 sts=2 et
 
   " javascript
   autocmd! FileType javascript set sw=2 sts=2 expandtab autoindent smartindent nocindent
@@ -167,14 +158,14 @@ function! StripTrailingWhitespace()
   call setpos('.', save_cursor)
 endfunction
 
-autocmd BufWritePre *.rake,*.graphql,*.rb,*.yml,*.js,*.jsx,*.css,*.less,*.sass,*.scss,*.html,*.xml,*.erb,*.haml,*.feature call StripTrailingWhitespace()
+autocmd BufWritePre *.rake,*.graphql,*.rb,*.yml,*.js,*.jsx,*.css,*.less,*.sass,*.scss,*.html,*.xml,*.erb,*.haml,*.feature,*.ts,*.vue call StripTrailingWhitespace()
 
 au BufRead,BufNewFile *.es6,*.jsx set ft=javascript
 au BufRead,BufNewFile *.rake,*.thor,Gemfile* set filetype=ruby
 
 autocmd FileType go set nolist
 
-autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd BufRead,BufNewFile *.md,*.html setlocal spell
 autocmd FileType gitcommit setlocal spell
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -200,17 +191,7 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
-" Insert a hash rocket with <c-l>
-imap <c-l> <space>=><space>
 " Can't be bothered to understand ESC vs <c-c> in insert mode
-imap <c-c> <esc>
-nnoremap <leader><leader> <c-^>
-" Reload in chrome
-map <leader>l :w\|:silent !reload-chrome<cr>
-" Align selected lines
-vnoremap <leader>ib :!align<cr>
-map <leader>v :vsp<CR>
-map <leader>h :sp<CR>
 map <space> :nohl<CR>
 let g:tmux_navigator_no_mappings = 1
 nnoremap <silent> <c-h> :TmuxNavigateLeft<cr>
@@ -219,6 +200,7 @@ nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <c-\> :TmuxNavigatePrevious<cr>
 nnoremap :Tabe :tabe
+noremap <F7> :CommandTFlush<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MULTIPURPOSE TAB KEY
@@ -248,121 +230,6 @@ function! RenameFile()
     endif
 endfunction
 map <leader>n :call RenameFile()<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SWITCH BETWEEN TEST AND PRODUCTION CODE
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! OpenTestAlternate()
-  let new_file = AlternateForCurrentFile()
-  exec ':e ' . new_file
-endfunction
-function! AlternateForCurrentFile()
-  let current_file = expand("%")
-  let new_file = current_file
-  let in_spec = match(current_file, '^spec/') != -1
-  let going_to_spec = !in_spec
-  let in_app = match(current_file, '\<controllers\>') != -1 || match(current_file, '\<models\>') != -1 || match(current_file, '\<workers\>') != -1 || match(current_file, '\<views\>') != -1 || match(current_file, '\<helpers\>') != -1
-  if going_to_spec
-    if in_app
-      let new_file = substitute(new_file, '^app/', '', '')
-    end
-    let new_file = substitute(new_file, '\.e\?rb$', '_spec.rb', '')
-    let new_file = 'spec/' . new_file
-  else
-    let new_file = substitute(new_file, '_spec\.rb$', '.rb', '')
-    let new_file = substitute(new_file, '^spec/', '', '')
-    if in_app
-      let new_file = 'app/' . new_file
-    end
-  endif
-  return new_file
-endfunction
-nnoremap <leader>. :call OpenTestAlternate()<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" RUNNING TESTS
-"
-" Test running here is contextual in two different ways:
-"
-" 1. It will guess at how to run the tests. E.g., if there's a Gemfile
-"    present, it will `bundle exec rspec` so the gems are respected.
-"
-" 2. It remembers which tests have been run. E.g., if I'm editing user_spec.rb
-"    and hit enter, it will run rspec on user_spec.rb. If I then navigate to a
-"    non-test file, like routes.rb, and hit return again, it will re-run
-"    user_spec.rb. It will continue using user_spec.rb as my 'default' test
-"    until I hit enter in some other test file, at which point that test file
-"    is run immediately and becomes the default. This is complex to describe
-"    fully, but simple to use in practice: always hit enter to run tests. It
-"    will run either the test file you're in or the last test file you hit
-"    enter in.
-"
-" 3. Sometimes you want to run just one test. For that, there's <leader>T,
-"    which passes the current line number to the test runner. RSpec knows what
-"    to do with this (it will run the first test it finds at or below the
-"    given line number). It probably won't work with other test runners.
-"    'Focusing' on a single test in this way will be remembered if you hit
-"    enter from non-test files, as described above.
-"
-" 4. Sometimes you don't want contextual test running. In that case, there's
-"    <leader>a, which runs everything.
-"
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! MapCR()
-  nnoremap <leader>r :call RunTestFile()<cr>
-endfunction
-call MapCR()
-nnoremap <leader>T :call RunNearestTest()<cr>
-nnoremap <leader>a :call RunTests('')<cr>
-
-function! RunTestFile(...)
-    if a:0
-        let command_suffix = a:1
-    else
-        let command_suffix = ""
-    endif
-
-    " Are we in a test file?
-    let in_test_file = match(expand("%"), '\(_spec.rb\|_test.rb\|spec.js\|_spec.jsx\)$') != -1
-
-    " Run the tests for the previously-marked file (or the current file if
-    " it's a test).
-    if in_test_file
-        call SetTestFile(command_suffix)
-    elseif !exists("t:grb_test_file")
-        return
-    end
-    call RunTests(t:grb_test_file)
-endfunction
-
-function! RunNearestTest()
-    let spec_line_number = line('.')
-    call RunTestFile(":" . spec_line_number)
-endfunction
-
-function! SetTestFile(command_suffix)
-    " Set the spec file that tests will be run for.
-    let t:grb_test_file=@% . a:command_suffix
-endfunction
-
-function! RunTests(filename)
-    " Write the file and run tests for the given filename
-    if expand("%") != ""
-      :w
-    end
-    " The file is executable; assume we should run
-    if executable(a:filename)
-      exec ":!./" . a:filename
-    " Fall back to a blocking test run with Bundler
-    elseif filereadable("Gemfile") && strlen(glob("spec/**/*.rb"))
-      exec ":Dispatch !bundle exec rspec --color " . a:filename
-    " If we see javascript-looking tests, assume they should be run with Nose
-    elseif strlen(glob("**/*.jsx") . glob("**/*.jsx"))
-      exec ":Dispatch !yarn jest " . a:filename
-    elseif strlen(glob("**/*.js") . glob("**/*.js"))
-      exec ":Dispatch !yarn jest " . a:filename
-    end
-endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " RemoveFancyCharacters COMMAND
@@ -409,6 +276,8 @@ iab safty safety
 let g:CommandTWildIgnore=&wildignore . ",*/node_modules,*/tmp,*/public"
 let g:CommandTSelectNextMap = ['<C-n>', '<C-j>', '<Down>', '<ESC>OB']
 let g:CommandTSelectPrevMap = ['<C-p>', '<C-k>', '<Up>', '<ESC>OA']
+let g:CommandTFileScanner = "find"
+
 " Vim-go
 let g:go_fmt_command = "goimports"
 let g:go_list_type = "quickfix"
@@ -418,5 +287,6 @@ let g:go_highlight_fields = 1
 let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+
 " vim-Ack
 let g:ackprg = 'rg --vimgrep --no-heading'

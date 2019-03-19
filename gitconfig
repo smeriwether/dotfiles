@@ -4,22 +4,20 @@
 
 [core]
   excludesfile = ~/.gitignore
+  editor = vim
 
 [alias]
-  b = branch
-  st = status
-  di = diff
-  co = checkout
-  ci = commit
-  pom = pull origin master
   aa = add --all
-  dc = diff --cached
   amend = commit --amend
-  undo = reset --soft HEAD^
+  b = !git --no-pager branch -v
+  ci = commit
+  co = checkout
+  dc = diff --cached
   delete = branch -D
+  pod = pull origin develop
+  pom = pull origin master
+  st = status
+  undo = reset --soft HEAD^
 
 [color]
   ui = auto
-  
-[diff "sopsdiffer"]
-  textconv = sops -d
