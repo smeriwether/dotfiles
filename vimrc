@@ -11,7 +11,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'mileszs/ack.vim'
-Plugin 'wincent/command-t'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-endwise'
@@ -23,6 +23,7 @@ Plugin 'tpope/vim-rails'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'posva/vim-vue'
 Plugin 'leafgarland/typescript-vim'
+Plugin 'kaicataldo/material.vim'
 call vundle#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -174,6 +175,10 @@ autocmd FileType gitcommit setlocal spell
 :set t_Co=256 " 256 colors
 :set background=dark
 :color grb256
+colorscheme material
+if (has('termguicolors'))
+  set termguicolors
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS LINE
@@ -271,12 +276,16 @@ iab safty safety
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin Setup
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Command T
-let g:CommandTWildIgnore=&wildignore . ",*/node_modules,*/tmp,*/public"
-let g:CommandTSelectNextMap = ['<C-n>', '<C-j>', '<Down>', '<ESC>OB']
-let g:CommandTSelectPrevMap = ['<C-p>', '<C-k>', '<Up>', '<ESC>OA']
-let g:CommandTFileScanner = "find"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" CtrlP
+let g:ctrlp_map = '<leader>t'
+let g:ctrlp_cmd = 'CtrlP'
+if executable('rg')
+  set grepprg=rg\ --color=never
+  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  let g:ctrlp_use_caching = 0
+endif
+set wildignore+="*/.git/*,*/tmp/*,*.swp"
 
 " Vim-go
 let g:go_fmt_command = "goimports"
@@ -289,4 +298,6 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 
 " vim-Ack
-let g:ackprg = 'rg --vimgrep --no-heading'
+if executable('rg')
+  let g:ackprg = 'rg --vimgrep --no-heading'
+endif
