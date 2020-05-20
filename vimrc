@@ -70,6 +70,7 @@ set backspace=indent,eol,start
 set showcmd
 " Enable highlighting for syntax
 syntax on
+syntax enable
 " Enable file type detection.
 " Use the default filetype settings, so that mail gets 'tw' set to 72,
 " 'cindent' is on in C files, etc.
@@ -113,9 +114,6 @@ if &term == "screen-256color"
   set t_F7=[31~
   set t_F8=[32~
   set t_F9=[33~
-endif
-if &term =~ "xterm" || &term =~ "screen"
-  let g:CommandTCancelMap = ['<ESC>', '<C-c>']
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -172,13 +170,11 @@ autocmd FileType gitcommit setlocal spell
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COLOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-:set t_Co=256 " 256 colors
-:set background=dark
-:color grb256
+set t_Co=256 " 256 colors
+set background=dark
+color grb256
 colorscheme material
-if (has('termguicolors'))
-  set termguicolors
-endif
+set termguicolors
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS LINE
@@ -284,6 +280,7 @@ if executable('rg')
   set grepprg=rg\ --color=never
   let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
   let g:ctrlp_use_caching = 0
+  let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 endif
 set wildignore+="*/.git/*,*/tmp/*,*.swp"
 
