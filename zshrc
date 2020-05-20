@@ -10,6 +10,8 @@ compinit
 export WORKSPACE=$HOME/Development
 export GIT_EDITOR=vim export PATH="$HOME/bin:/usr/local/bin:$PATH:$GOPATH/bin:$PATH"
 export EDITOR=vim
+export WEBSITE=/Users/srm/Development/smeriwether/smeriwether.com
+export WEBSITE_SERVER=root@206.189.204.126
 
 # Aliases
 alias up='cd ..'
@@ -54,3 +56,5 @@ bindkey -e
 eval "$(rbenv init - zsh --no-rehash)"
 
 source $ZSH/oh-my-zsh.sh
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
