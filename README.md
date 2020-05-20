@@ -32,6 +32,12 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 ## Other Program Setup
 
+* Oh My Zsh 
+
+```
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
 * Homebrew
 
 ```
@@ -67,5 +73,7 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | b
 * [Insomnia](https://insomnia.rest/)
 
 * [Postico](https://eggerapps.at/postico/)
+
+* [TextMate](https://macromates.com)
 
 
