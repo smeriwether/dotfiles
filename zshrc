@@ -8,7 +8,8 @@ compinit
 
 # Exports
 export WORKSPACE=$HOME/Development
-export GIT_EDITOR=vim export PATH="$HOME/bin:/usr/local/bin:$PATH:$GOPATH/bin:$PATH"
+export GIT_EDITOR=vim 
+export PATH="$HOME/bin:/usr/local/bin:$PATH:$GOPATH/bin:$PATH"
 export EDITOR=vim
 export WEBSITE=/Users/srm/Development/smeriwether/smeriwether.com
 export WEBSITE_SERVER=root@206.189.204.126
@@ -58,3 +59,9 @@ eval "$(rbenv init - zsh --no-rehash)"
 source $ZSH/oh-my-zsh.sh
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/srm/Development/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/srm/Development/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/srm/Development/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/srm/Development/google-cloud-sdk/completion.zsh.inc'; fi
