@@ -8,6 +8,7 @@ compinit
 
 # Exports
 export WORKSPACE=$HOME/Development
+export DOTFILES=$WORKSPACE/dotfiles
 export GIT_EDITOR=vim 
 export PATH="$HOME/bin:/usr/local/bin:$PATH:$GOPATH/bin:$PATH"
 export EDITOR=vim
