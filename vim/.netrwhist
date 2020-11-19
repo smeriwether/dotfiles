@@ -1,2 +1,10 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =0
+let g:netrw_dirhistcnt =8
+let g:netrw_dirhist_8='/Users/srm/Development/notify/app/workers'
+let g:netrw_dirhist_7='/Users/srm/Development/notify/app/views/email_digests/shared/_template.html.erb'
+let g:netrw_dirhist_6='/Users/srm/Development/notify'
+let g:netrw_dirhist_5='/Users/srm/Development/notify/app/workers'
+let g:netrw_dirhist_4='/Users/srm/Development/notify'
+let g:netrw_dirhist_3='/Users/srm/Development/sprout-labs/headero/config'
+let g:netrw_dirhist_2='/Users/srm/Development/sprout-labs/headero'
+let g:netrw_dirhist_1='/Users/srm/Downloads/sprout labs/yesterdays-hit'

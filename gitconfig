@@ -1,10 +1,11 @@
 [user]
   name = Stephen Meriwether
-  email = stephen@meriwether.io 
+  email = smeriwether@hey.com
 
 [core]
   excludesfile = ~/.gitignore
   editor = vim
+	attributesfile = /Users/srm/.gitattributes
 
 [alias]
   aa = add --all
@@ -21,3 +22,8 @@
 
 [color]
   ui = auto
+
+[branch "master"]
+    remote = origin
+    merge = refs/heads/master
+    rebase = true
