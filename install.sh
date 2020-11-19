@@ -1,10 +1,10 @@
-rm ~/.gitconfig
-rm ~/.gitignore
+rm -f ~/.gitconfig
+rm -f ~/.gitignore
 rm -rf ~/.vim
-rm ~/.vimrc
-rm ~/.tmux.conf
-rm ~/.zshrc
-rm ~/.railrc
+rm -f ~/.vimrc
+rm -f ~/.tmux.conf
+rm -f ~/.zshrc
+rm -f ~/.railsrc
 
 ln -s $DOTFILES/gitconfig ~/.gitconfig
 ln -s $DOTFILES/gitignore ~/.gitignore
