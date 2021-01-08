@@ -4,9 +4,9 @@
 **/.DS_Store
 **/.hg
 **/tmp/**
-**/public/uploads/**
-**/public/images/**
 **/chromedriver.out
 **/node_modules/**
 connection_uri.txt
 .env.local
+.agignore
+.ignore
