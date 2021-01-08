@@ -22,7 +22,7 @@ Plugin 'mxw/vim-jsx'
 Plugin 'tpope/vim-rails'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'posva/vim-vue'
-Plugin 'leafgarland/typescript-vim'
+Plugin 'HerringtonDarkholme/yats.vim'
 Plugin 'kaicataldo/material.vim'
 call vundle#end()
 
@@ -98,10 +98,9 @@ set nofoldenable
 set nojoinspaces
 " If a file is changed outside of vim, automatically reload it without asking
 set autoread
-" Use the old vim regex engine (version 1, as opposed to version 2, which was
-" introduced in Vim 7.3.969). The Ruby syntax highlighting is significantly
-" slower with the new regex engine.
-set re=1
+" Use the new vim regex engine (version 2) becuase the old (version 1) is too
+" slow for my iMac to process.
+set re=0
 set clipboard=unnamed
 set number
 set nowrap
@@ -273,7 +272,7 @@ iab safty safety
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin Setup
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" CtrlP
+" CtrlP
 let g:ctrlp_map = '<leader>t'
 let g:ctrlp_cmd = 'CtrlP'
 if executable('rg')
