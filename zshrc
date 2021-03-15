@@ -13,7 +13,7 @@ export GIT_EDITOR=vim
 export PATH="$HOME/bin:/usr/local/bin:$PATH:$GOPATH/bin:$PATH"
 export EDITOR=vim
 export WEBSITE="$HOME/Development/stephen.fyi"
-export WEBSITE_SERVER=root@206.189.204.126
+export WEBSITE_SERVER=root@67.205.191.157
 
 # Aliases
 alias up='cd ..'
