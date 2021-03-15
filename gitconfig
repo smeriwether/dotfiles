@@ -16,7 +16,7 @@
   dc = diff --cached
   delete = branch -D
   pod = pull origin develop
-  pom = pull origin master
+  pom = pull origin main
   st = status
   undo = reset --soft HEAD^
 
