@@ -1,6 +1,6 @@
 [user]
   name = Stephen Meriwether
-  email = smeriwether@hey.com
+  email = stephen.meriwether@icloud.com
 
 [core]
   excludesfile = ~/.gitignore
@@ -12,11 +12,8 @@
   amend = commit --amend
   b = !git --no-pager branch -v
   ci = commit
-  co = checkout
   dc = diff --cached
   delete = branch -D
-  pod = pull origin develop
-  pom = pull origin main
   st = status
   undo = reset --soft HEAD^
 
@@ -24,6 +21,6 @@
   ui = auto
 
 [branch "master"]
-    remote = origin
-    merge = refs/heads/master
-    rebase = true
+  remote = origin
+  merge = refs/heads/master
+  rebase = true

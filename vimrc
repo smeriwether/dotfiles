@@ -1,6 +1,3 @@
-" This is Stephen Meriwether's .vimrc file
-" vim:set ts=2 sts=2 sw=2 expandtab:
-
 " remove all existing autocmds
 autocmd!
 
@@ -16,15 +13,10 @@ Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-fugitive'
-Plugin 'fatih/vim-go'
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
-Plugin 'tpope/vim-rails'
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'posva/vim-vue'
-Plugin 'HerringtonDarkholme/yats.vim'
 Plugin 'kaicataldo/material.vim'
-call vundle#end()
+Plugin 'zanloy/vim-colors-grb256'
+call vundle#end() 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BASIC EDITING CONFIGURATION
@@ -106,50 +98,18 @@ set number
 set nowrap
 set notimeout
 if &term == "screen-256color"
-  set t_F3=[25~
-  set t_F4=[26~
-  set t_F5=[28~
-  set t_F6=[29~
-  set t_F7=[31~
-  set t_F8=[32~
-  set t_F9=[33~
+  set t_F3=[25~
+  set t_F4=[26~
+  set t_F5=[28~
+  set t_F6=[29~
+  set t_F7=[31~
+  set t_F8=[32~
+  set t_F9=[33~
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CUSTOM AUTOCMDS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup vimrcEx
-  " Clear all autocmds in the group
-  autocmd!
-  autocmd FileType text setlocal textwidth=78
-
-  "for ruby, autoindent with two spaces, always expand tabs
-  autocmd FileType ruby,haml,yaml,html,sass,cucumber set ai sw=2 sts=2 et
-  autocmd FileType python set sw=4 sts=4 et
-
-  autocmd! BufRead,BufNewFile *.sass setfiletype sass
-
-  autocmd BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:&gt;
-  autocmd BufRead *.markdown  set ai formatoptions=tcroqn2 comments=n:&gt;
-
-  " Don't syntax highlight markdown because it's often wrong
-  autocmd! FileType mkd setlocal syn=off
-
-  " Leave the return key alone when in command line windows, since it's used
-  " to run commands there.
-  autocmd! CmdwinEnter * :unmap <cr>
-  autocmd! CmdwinLeave * :call MapCR()
-
-  " *.md is markdown
-  autocmd! BufNewFile,BufRead *.md setlocal ft=
-
-  " javascript
-  autocmd! FileType javascript set sw=2 sts=2 expandtab autoindent smartindent nocindent
-
-  " Expand tabs in Go. Was gofmt raised in a barn?!
-  autocmd! FileType go set sw=4 sts=4 expandtab | retab
-augroup END
-
 function! StripTrailingWhitespace()
   let save_cursor = getpos(".")
   %s/\s\+$//e
@@ -268,7 +228,6 @@ iab postresql postgresql
 iab recieve receive
 iab safty safety
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin Setup
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -282,16 +241,6 @@ if executable('rg')
   let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 endif
 set wildignore+="*/.git/*,*/tmp/*,*.swp"
-
-" Vim-go
-let g:go_fmt_command = "goimports"
-let g:go_list_type = "quickfix"
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_types = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
 
 " vim-Ack
 if executable('rg')
