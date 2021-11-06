@@ -16,6 +16,7 @@
   delete = branch -D
   st = status
   undo = reset --soft HEAD^
+  co = checkout
 
 [color]
   ui = auto
