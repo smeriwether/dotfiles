@@ -11,6 +11,8 @@ compinit
 
 source $ZSH/oh-my-zsh.sh
 
+export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH";
+
 # User configuration
 
 alias up='cd ..'
