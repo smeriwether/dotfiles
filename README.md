@@ -51,9 +51,10 @@ brew install rbenv
 brew install git
 brew install postgresql
 brew install trash
+brew install rg
 ```
 
 ## Also Install
 
-See [Everyday Mac apps](https://merimerimeri.com/mac-apps/) for other apps to install.
+See [Everyday Mac apps](https://merimerimeri.com/essays/mac-apps/) for other apps to install.
 
